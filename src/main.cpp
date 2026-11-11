@@ -30,13 +30,15 @@ int main(int argc, char* argv[]) {
             throw std::runtime_error("Пакет не найден: " + config.package);
         }
         std::cout << "Прямые зависимости пакета " << config.package << ":\n";
-        if (found->second.empty()) {
-            std::cout << "  нет\n";
-        } else {
-            for (const auto& dependency : found->second) {
-                std::cout << "  " << dependency << '\n';
-            }
+        for (const auto& dependency : found->second) {
+            std::cout << "  " << dependency << '\n';
         }
+        std::cout << '\n';
+
+        const auto graph = depviz::buildGraphDfs(
+            config.package, repository, config.maxDepth
+        );
+        depviz::printGraph(graph, "Граф зависимостей (DFS без рекурсии)");
         return 0;
     } catch (const std::exception& error) {
         std::cerr << "Ошибка: " << error.what() << '\n';
