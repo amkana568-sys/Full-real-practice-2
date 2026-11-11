@@ -59,10 +59,10 @@ std::string parseString(const std::string& raw, const std::string& key) {
     std::string result;
     for (std::size_t i = 1; i + 1 < value.size(); ++i) {
         if (value[i] == '\\') {
-            ++i;
-            if (i + 1 > value.size()) {
+            if (i + 1 >= value.size() - 1) {
                 throw std::runtime_error("Некорректная escape-последовательность.");
             }
+            ++i;
             if (value[i] == 'n') {
                 result.push_back('\n');
             } else if (value[i] == 't') {
@@ -73,6 +73,12 @@ std::string parseString(const std::string& raw, const std::string& key) {
                 throw std::runtime_error("Недопустимая escape-последовательность.");
             }
         } else {
+            if (value[i] == '"') {
+                throw std::runtime_error(
+                    "Внутренняя кавычка строки TOML "
+                    "должна быть экранирована."
+                );
+            }
             result.push_back(value[i]);
         }
     }

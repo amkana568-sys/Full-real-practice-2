@@ -21,20 +21,13 @@ int main(int argc, char* argv[]) {
                 path = std::filesystem::path(configFile).parent_path() / path;
             }
             repository = depviz::loadTestRepository(path.string());
+            std::cout << "Источник данных: тестовый репозиторий\n\n";
         } else {
             repository = depviz::loadApkRepository(config.repository);
+            std::cout << "Источник данных: Alpine Linux APKINDEX\n\n";
         }
 
-        const auto found = repository.find(config.package);
-        if (found == repository.end()) {
-            throw std::runtime_error("Пакет не найден: " + config.package);
-        }
-        std::cout << "Прямые зависимости пакета " << config.package << ":\n";
-        for (const auto& dependency : found->second) {
-            std::cout << "  " << dependency << '\n';
-        }
-        std::cout << '\n';
-
+        depviz::printDirectDependencies(config.package, repository);
         const auto graph = depviz::buildGraphDfs(
             config.package, repository, config.maxDepth
         );
@@ -44,6 +37,16 @@ int main(int argc, char* argv[]) {
             config.package, repository, config.maxDepth
         );
         depviz::printReverseDependencies(reverse, config.package);
+
+        depviz::writePlantUml(graph, "graph.puml");
+        depviz::writeSvg(graph, config.package, "graph.svg");
+        std::cout << "PlantUML сохранён: graph.puml\n";
+        std::cout << "Изображение графа сохранено: graph.svg\n";
+
+        if (config.asciiTree) {
+            depviz::printAsciiTree(graph, config.package, config.maxDepth);
+        }
+        depviz::openSvg("graph.svg");
         return 0;
     } catch (const std::exception& error) {
         std::cerr << "Ошибка: " << error.what() << '\n';

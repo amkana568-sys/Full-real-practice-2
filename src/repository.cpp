@@ -89,7 +89,7 @@ void addRecord(
     records[record.name] = record;
 }
 
-std::map<std::string, ApkRecord> parseApkIndex(std::istream& input) {
+std::map<std::string, ApkRecord> parseApkRecords(std::istream& input) {
     std::map<std::string, ApkRecord> records;
     ApkRecord current;
     std::string line;
@@ -162,7 +162,9 @@ Repository makeRepository(const std::map<std::string, ApkRecord>& records) {
 Repository loadTestRepository(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
-        throw std::runtime_error("Не удалось открыть тестовый репозиторий: " + filename);
+        throw std::runtime_error(
+            "Не удалось открыть тестовый репозиторий: " + filename
+        );
     }
 
     Repository repository;
@@ -219,6 +221,12 @@ Repository loadTestRepository(const std::string& filename) {
     return repository;
 }
 
+Repository parseApkIndexText(const std::string& content) {
+    std::istringstream input(content);
+    const auto records = parseApkRecords(input);
+    return makeRepository(records);
+}
+
 Repository loadApkRepository(const std::string& url) {
     const std::string command =
         "curl --fail --location --silent --show-error -- " + shellQuote(url) +
@@ -236,13 +244,12 @@ Repository loadApkRepository(const std::string& url) {
     const int status = pclose(pipe);
     if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status) != 0) {
         throw std::runtime_error(
-            "Не удалось загрузить APKINDEX. Проверьте URL, сеть и доступность curl/tar."
+            "Не удалось загрузить APKINDEX. Проверьте URL, сеть "
+            "и доступность curl/tar."
         );
     }
 
-    std::istringstream input(content);
-    const auto records = parseApkIndex(input);
-    return makeRepository(records);
+    return parseApkIndexText(content);
 }
 
 }  // namespace depviz

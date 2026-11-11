@@ -21,6 +21,7 @@ Config loadConfig(const std::string& filename);
 void printConfig(const Config& config);
 
 Repository loadTestRepository(const std::string& filename);
+Repository parseApkIndexText(const std::string& content);
 Repository loadApkRepository(const std::string& url);
 
 Graph buildGraphDfs(

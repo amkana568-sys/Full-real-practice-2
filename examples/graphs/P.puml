@@ -1,0 +1,9 @@
+@startuml
+left to right direction
+component "P" as N0
+component "Q" as N1
+component "R" as N2
+N0 --> N1
+N1 --> N2
+N2 --> N0
+@enduml

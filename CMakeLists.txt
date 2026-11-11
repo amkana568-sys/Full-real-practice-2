@@ -20,3 +20,8 @@ endif()
 
 add_executable(visualizer src/main.cpp)
 target_link_libraries(visualizer PRIVATE depviz)
+
+enable_testing()
+add_executable(test_runner tests/test_main.cpp)
+target_link_libraries(test_runner PRIVATE depviz)
+add_test(NAME dependency_visualizer_tests COMMAND test_runner)

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="290" viewBox="0 0 980 290">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#34495e"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<path d="M 210 73 L 270 73" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M 210 73 L 270 173" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M 430 73 L 490 73" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M 430 73 L 490 173" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M 430 173 L 490 173" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M 650 73 L 710 73" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M 650 173 L 710 73" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="50" y="45" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<text x="130" y="79" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">A</text>
+<rect x="270" y="45" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<text x="350" y="79" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">B</text>
+<rect x="270" y="145" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<text x="350" y="179" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">C</text>
+<rect x="490" y="45" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<text x="570" y="79" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">D</text>
+<rect x="490" y="145" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<text x="570" y="179" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">E</text>
+<rect x="710" y="45" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<text x="790" y="79" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">F</text>
+</svg>

@@ -1,0 +1,5 @@
+package = "X"
+repository = "../test_repo.txt"
+test_mode = true
+ascii_tree = true
+max_depth = 3
