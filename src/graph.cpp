@@ -369,7 +369,10 @@ void writeSvg(
 }
 
 void openSvg(const std::string& filename) {
-#if defined(__linux__)
+#if defined(_WIN32)
+    const std::string command = "start \"\" \"" + filename + "\"";
+    std::system(command.c_str());
+#elif defined(__linux__)
     if (std::getenv("DISPLAY") == nullptr && std::getenv("WAYLAND_DISPLAY") == nullptr) {
         return;
     }

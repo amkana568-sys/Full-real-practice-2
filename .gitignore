@@ -1,7 +1,9 @@
-build/
-/graph.puml
-/graph.svg
+/build/
+/build_*/
 *.o
 *.obj
 *.exe
-.DS_Store
+*.dll
+*.pdb
+/graph.puml
+/graph.svg

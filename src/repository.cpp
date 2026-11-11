@@ -9,7 +9,14 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+
+#ifdef _WIN32
+#include <process.h>
+#define popen _popen
+#define pclose _pclose
+#else
 #include <sys/wait.h>
+#endif
 
 namespace depviz {
 namespace {
@@ -55,6 +62,18 @@ std::string packageName(const std::string& dependency) {
 }
 
 std::string shellQuote(const std::string& value) {
+#ifdef _WIN32
+    std::string result = "\"";
+    for (const char ch : value) {
+        if (ch == '\"') {
+            result += "\\\"";
+        } else {
+            result.push_back(ch);
+        }
+    }
+    result.push_back('\"');
+    return result;
+#else
     std::string result = "'";
     for (const char ch : value) {
         if (ch == '\'') {
@@ -65,6 +84,7 @@ std::string shellQuote(const std::string& value) {
     }
     result.push_back('\'');
     return result;
+#endif
 }
 
 struct ApkRecord {
@@ -242,7 +262,13 @@ Repository loadApkRepository(const std::string& url) {
         content += buffer;
     }
     const int status = pclose(pipe);
-    if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+#ifdef _WIN32
+    const bool commandFailed = status != 0;
+#else
+    const bool commandFailed =
+        status == -1 || !WIFEXITED(status) || WEXITSTATUS(status) != 0;
+#endif
+    if (commandFailed) {
         throw std::runtime_error(
             "Не удалось загрузить APKINDEX. Проверьте URL, сеть "
             "и доступность curl/tar."
