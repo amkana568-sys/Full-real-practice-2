@@ -1,0 +1,7 @@
+build/
+/graph.puml
+/graph.svg
+*.o
+*.obj
+*.exe
+.DS_Store

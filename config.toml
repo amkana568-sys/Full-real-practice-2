@@ -1,0 +1,6 @@
+# Вариант №23. Для тестового режима repository указывает на локальный файл.
+package = "A"
+repository = "test_repo.txt"
+test_mode = true
+ascii_tree = true
+max_depth = 3
