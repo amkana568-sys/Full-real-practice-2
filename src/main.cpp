@@ -39,6 +39,11 @@ int main(int argc, char* argv[]) {
             config.package, repository, config.maxDepth
         );
         depviz::printGraph(graph, "Граф зависимостей (DFS без рекурсии)");
+
+        const auto reverse = depviz::buildReverseGraph(
+            config.package, repository, config.maxDepth
+        );
+        depviz::printReverseDependencies(reverse, config.package);
         return 0;
     } catch (const std::exception& error) {
         std::cerr << "Ошибка: " << error.what() << '\n';

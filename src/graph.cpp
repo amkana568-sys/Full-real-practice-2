@@ -53,6 +53,37 @@ Graph buildGraphDfs(
     return graph;
 }
 
+Graph buildReverseGraph(
+    const std::string& start,
+    const Repository& repository,
+    int maxDepth
+) {
+    Repository reverse;
+    for (const auto& item : repository) {
+        reverse[item.first];
+        for (const auto& dependency : item.second) {
+            reverse[dependency].push_back(item.first);
+        }
+    }
+    return buildGraphDfs(start, reverse, maxDepth);
+}
+
+void printReverseDependencies(const Graph& graph, const std::string& root) {
+    std::cout << "Обратные зависимости пакета " << root << ":\n";
+    bool foundAny = false;
+    for (const auto& item : graph) {
+        if (item.first == root) {
+            continue;
+        }
+        std::cout << "  " << item.first << '\n';
+        foundAny = true;
+    }
+    if (!foundAny) {
+        std::cout << "  нет\n";
+    }
+    std::cout << '\n';
+}
+
 void printGraph(const Graph& graph, const std::string& title) {
     std::cout << title << ":\n";
     for (const auto& item : graph) {
