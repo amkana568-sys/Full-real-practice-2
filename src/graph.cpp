@@ -357,7 +357,7 @@ void writeSvg(
         const int y = item.second.second;
         output << "<rect x=\"" << x << "\" y=\"" << y
                << "\" width=\"" << nodeWidth << "\" height=\""
-               << nodeHeight << "\" rx=\"8\" fill=\"#eaf2f8\" "
+               << nodeHeight << "\" rx=\"8\" fill=\"none\" "
                << "stroke=\"#34495e\" stroke-width=\"1.5\"/>\n";
         output << "<text x=\"" << x + nodeWidth / 2 << "\" y=\""
                << y + 34 << "\" text-anchor=\"middle\" "
