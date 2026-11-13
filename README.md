@@ -196,8 +196,9 @@ ctest --test-dir build --output-on-failure
 
 ## 9. Проверка простоты и ограничения
 
-Краткое описание назначения каждого исходного файла и границ реализации
-приведено в [`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md).
+Краткое описание исходных файлов и ограничений реализации приведено в
+[`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md). Критерии структуры и проверки
+перед публикацией перечислены в [`REPOSITORY_CHECKLIST.md`](REPOSITORY_CHECKLIST.md).
 
 ## 10. Публикация в GitHub
 

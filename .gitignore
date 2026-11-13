@@ -1,6 +1,15 @@
-# Build results and compiled files
+# Build directories and CMake files
 /build/
 /build_*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+build.ninja
+.ninja_*
+Testing/
+
+# Compiled files
 *.o
 *.obj
 *.a
@@ -10,17 +19,25 @@
 *.exe
 *.pdb
 
-# Generated graphs in the project root
+# Generated root-level output
 /graph*.puml
 /graph*.svg
 
-# Local configuration for a real repository
+# Local configuration and submitted report
 /config_real.toml
+*.docx
+*.pdf
 
-# Report is submitted separately, not stored in the source repository
-/Отчет_Вариант_23.docx
+# Archives and binary packages
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.*
+*.tgz
+*.apk
 
-# Editor and operating system files
+# Editor and operating-system files
 /.vscode/
 /.idea/
 *.user
@@ -28,9 +45,9 @@
 .DS_Store
 Thumbs.db
 
-# Archives must not be committed
-*.zip
-*.7z
-*.rar
-*.tar
-*.tar.gz
+# Python caches (not used by this project)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/

@@ -1,168 +1,184 @@
-# Публикация проекта в GitHub
+# Как самостоятельно опубликовать проект в GitHub
 
-Инструкция предназначена для папки проекта, в которой уже есть каталог `.git`.
-Повторно выполнять `git init` не нужно: история пяти этапов уже создана.
+Инструкция рассчитана на MSYS2 UCRT64 в Windows. Проект уже содержит папку
+`.git` и историю разработки. Повторно выполнять `git init` не нужно.
 
-## 1. Открыть проект в MSYS2 UCRT64
+## 1. Распаковать проект
 
-Откройте MSYS2 UCRT64 и перейдите в каталог проекта. Для компьютера, где
-проект расположен по пути из примера, команда такая:
+Распакуйте архив `variant23_dependency_visualizer_FINAL.zip` в удобную папку.
+Например:
+
+`C:\Users\ИМЯ\Desktop\variant23_dependency_visualizer_FINAL`
+
+Откройте MSYS2 UCRT64 и перейдите в эту папку. Пример для пользователя STRIX:
 
 ```bash
-cd "/c/Users/STRIX/Desktop/учеба/конфУправление/пр3/proga"
+cd "/c/Users/STRIX/Desktop/variant23_dependency_visualizer_FINAL"
 ```
 
-Проверьте Git:
+Укажите фактический путь, в который вы распаковали архив.
+
+## 2. Проверить Git и настроить автора
+
+Проверьте наличие Git:
 
 ```bash
 git --version
 ```
 
-Если команда не найдена, установите Git из MSYS2:
+Если Git не найден, установите его в MSYS2 UCRT64:
 
 ```bash
 pacman -S --needed git
 ```
 
-## 2. Настроить имя автора коммитов
-
-Укажите свои имя и email. Email должен быть привязан к GitHub или заменён
-на адрес noreply из настроек GitHub.
+Укажите свои реальные данные. Email должен быть связан с аккаунтом GitHub
+(можно взять адрес `noreply` в настройках GitHub):
 
 ```bash
 git config user.name "Имя Фамилия"
 git config user.email "ВАШ_EMAIL"
 ```
 
-Проверьте локальную историю:
+Проверьте настройки:
 
 ```bash
-git log --oneline
+git config user.name
+git config user.email
 ```
 
-В истории должны быть сообщения `feat(config)`, `feat(apk)`, два коммита
-`feat(graph)` и `feat(output)`. Это пять этапов задания.
+## 3. Заменить технического автора в уже созданных коммитах
 
-## 3. Не добавлять отчёт Word и файлы сборки
-
-Отчёт DOCX сдаётся отдельно. В соответствии с критериями репозиторий
-исходного кода не должен содержать бинарные файлы и артефакты сборки.
-
-Новый `.gitignore` исключает папку `build`, исполняемые файлы, архивы,
-локальную конфигурацию и DOCX-отчёт. Если DOCX уже отслеживается Git,
-уберите его только из индекса, сохранив файл на компьютере:
+В подготовленной истории первоначально указан технический автор
+`Project Author <project-author@example.invalid>`. Перед первой публикацией
+замените его на свои данные. Подставьте одинаковые реальные имя и email
+вместо `ВАШЕ ИМЯ` и `ВАШ_EMAIL`:
 
 ```bash
-git rm --cached --ignore-unmatch -- "Отчет_Вариант_23.docx"
-```
-
-Посмотрите, что будет добавлено в коммит:
-
-```bash
-git status --short
-```
-
-В списке не должно быть файлов из `build/`, `.exe`, `.a`, архивов или DOCX.
-
-## 4. Сохранить последние изменения
-
-Добавьте актуальные файлы проекта и документацию:
-
-```bash
-git add -A
-git status --short
-git commit -m "chore(repo): prepare project for public review"
-```
-
-Команда `git add -A` безопасна здесь потому, что `.gitignore` уже исключает
-сборку, бинарные файлы, архивы и отдельный Word-отчёт.
-
-## 5. Исправить автора старых учебных коммитов (рекомендуется)
-
-В исходной локальной истории учебные коммиты были созданы с техническим
-автором `Project Author <project-author@example.invalid>`. Чтобы в GitHub
-отображалось ваше имя, до первой публикации можно заменить автора старых
-коммитов. Замените `ВАШЕ ИМЯ` и `ВАШ_EMAIL` в команде на свои данные:
-
-```bash
-git filter-branch --force \
-  --env-filter '
-OLD_EMAIL="project-author@example.invalid"
-if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]; then
+git filter-branch --force --env-filter '
+if [ "$GIT_AUTHOR_EMAIL" = "project-author@example.invalid" ]; then
     GIT_AUTHOR_NAME="ВАШЕ ИМЯ"
     GIT_AUTHOR_EMAIL="ВАШ_EMAIL"
     export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
 fi
-if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]; then
+if [ "$GIT_COMMITTER_EMAIL" = "project-author@example.invalid" ]; then
     GIT_COMMITTER_NAME="ВАШЕ ИМЯ"
     GIT_COMMITTER_EMAIL="ВАШ_EMAIL"
     export GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
 fi
-' \
-  --index-filter 'git rm --cached --ignore-unmatch -- "Отчет_Вариант_23.docx"' \
-  --prune-empty -- --all
+' -- --all
 ```
 
-Эта операция переписывает локальные идентификаторы коммитов. Выполняйте её
-только до первой отправки проекта в GitHub. Сообщения пяти этапов сохраняются.
-Файл DOCX останется в папке проекта, но будет удалён из всей публикуемой
-истории Git.
+Эту команду нужно выполнить один раз, до отправки проекта на GitHub. Она
+меняет идентификаторы локальных коммитов, но сохраняет их сообщения и порядок.
 
-Проверьте результат:
+Проверьте авторов и сообщения:
 
 ```bash
 git log --format="%h %an <%ae> %s"
-git ls-tree -r --name-only HEAD
 ```
 
-В списке файлов не должно быть `Отчет_Вариант_23.docx`, `build/`, архивов
-и исполняемых файлов.
+В сообщениях должны присутствовать пять основных этапов:
 
-## 6. Создать пустой репозиторий на GitHub
+- `feat(config): ...` — этап 1, TOML-конфигурация;
+- `feat(apk): ...` — этап 2, чтение APKINDEX;
+- `feat(graph): ...` — этап 3, DFS без рекурсии;
+- `feat(graph): ...` — этап 4, обратные зависимости;
+- `feat(output): ...` — этап 5, PlantUML, SVG и ASCII.
+
+Дополнительные коммиты по документации, Windows-сборке и оформлению графа
+допустимы: все они также оформлены по Conventional Commits.
+
+## 4. Проверить, что в репозиторий не попадут лишние файлы
+
+Файл `.gitignore` уже подготовлен. Он исключает сборку, исполняемые файлы,
+архивы, локальный `config_real.toml`, отчёты DOCX/PDF, кэши и настройки
+редакторов.
+
+Проверьте состояние:
+
+```bash
+git status --short
+```
+
+После распаковки и проверки в списке не должно быть папки `build`, файлов
+`.exe`, `.dll`, архивов или отчёта Word. Папка сборки создаётся заново при
+запуске `run_windows.sh` и не отправляется в GitHub.
+
+Проверьте, что исходные файлы и обязательная структура отслеживаются Git:
+
+```bash
+git ls-files
+```
+
+Должны быть видны `README.md`, `.gitignore`, `src/`, `include/`, `tests/`,
+`run.sh`, `run_windows.sh` и `CMakeLists.txt`.
+
+## 5. Создать публичный репозиторий на сайте GitHub
 
 1. Откройте <https://github.com/new> и войдите в свой аккаунт.
-2. Введите имя, например `variant23-dependency-visualizer`.
-3. Выберите **Public**, чтобы преподаватель мог открыть проект по ссылке.
-4. Не ставьте флажки добавления README, `.gitignore` и License: эти файлы
-   уже есть в локальном проекте.
-5. Нажмите **Create repository** и скопируйте HTTPS URL репозитория.
+2. В поле Repository name укажите `variant23-dependency-visualizer`.
+3. Выберите `Public`, чтобы преподаватель мог открыть репозиторий без запроса
+   доступа.
+4. Не добавляйте README, `.gitignore` и License: эти файлы уже есть в проекте.
+5. Нажмите `Create repository`.
+6. Скопируйте HTTPS-адрес созданного пустого репозитория. Он выглядит так:
+   `https://github.com/ВАШ_ЛОГИН/variant23-dependency-visualizer.git`.
 
-## 7. Отправить локальную историю в GitHub
+## 6. Отправить проект из MSYS2 UCRT64 на GitHub
 
-Замените `USERNAME` на свой логин GitHub:
+Замените `ВАШ_ЛОГИН` на свой логин GitHub:
 
 ```bash
 git branch -M main
-git remote add origin https://github.com/USERNAME/variant23-dependency-visualizer.git
+git remote add origin https://github.com/ВАШ_ЛОГИН/variant23-dependency-visualizer.git
 git push -u origin main
 ```
 
-Если Git сообщает, что `origin` уже существует, вместо `git remote add`
-выполните:
+Если Git сообщает, что `origin` уже существует, выполните вместо `git remote add`:
 
 ```bash
-git remote set-url origin https://github.com/USERNAME/variant23-dependency-visualizer.git
+git remote set-url origin https://github.com/ВАШ_ЛОГИН/variant23-dependency-visualizer.git
 git push -u origin main
 ```
 
-При запросе авторизации войдите через браузер или используйте Git Credential
-Manager / Personal Access Token. Пароль от аккаунта GitHub в качестве пароля
-Git по HTTPS не используется. Не записывайте токен в файлы проекта.
+При запросе авторизации подтвердите вход через браузер или Git Credential
+Manager. Обычный пароль от аккаунта GitHub не используется для HTTPS push.
+Не вставляйте Personal Access Token в исходные файлы и не публикуйте его.
 
-## 8. Проверить репозиторий на сайте
+## 7. Проверить репозиторий на сайте
 
-Откройте созданную страницу GitHub. Проверьте, что в корне видны:
+Откройте страницу репозитория на GitHub. Проверьте следующее:
 
-- `README.md` и `.gitignore`;
-- `src/` и `include/`;
-- `tests/`;
-- `run.sh` и `run_windows.sh`;
-- `CMakeLists.txt`, `config.toml`, `test_repo.txt`;
-- `examples/` и `docs/`.
+- видимость репозитория — `Public`;
+- в корне есть `README.md` и `.gitignore`;
+- присутствуют каталоги `src/` и `tests/`;
+- присутствует `include/` с общим заголовком;
+- есть скрипты `run.sh` и `run_windows.sh`;
+- есть `CMakeLists.txt`, `config.toml`, `test_repo.txt`, `examples/` и `docs/`;
+- вкладка `Commits` показывает историю пяти этапов с сообщениями Conventional
+  Commits;
+- в репозитории нет `build/`, исполняемых файлов, архивов, DOCX/PDF и файлов
+  настроек редактора;
+- README открывается на главной странице и содержит описание, настройки,
+  сборку, тесты и примеры использования.
 
-На вкладке **Commits** должны быть видны пять этапов с сообщениями
-Conventional Commits. На вкладке **Code** не должно быть папки `build`,
-архивов, исполняемых файлов и Word-отчёта.
+Отчёт `Отчет_Вариант_23_черно_белый.docx` сдаётся преподавателю отдельно.
+Его не нужно помещать в репозиторий исходного кода.
 
-Word-отчёт `Отчет_Вариант_23.docx` храните отдельно и сдавайте преподавателю
-отдельным файлом.
+## 8. Команды для повторной проверки перед защитой
+
+В каталоге проекта:
+
+```bash
+bash run_windows.sh
+ctest --test-dir build --output-on-failure
+./build/visualizer.exe examples/config_A.toml
+./build/visualizer.exe examples/config_X.toml
+./build/visualizer.exe examples/config_P.toml
+./build/visualizer.exe examples/config_curl.toml
+```
+
+Последний пример требует подключения к Интернету и получает данные из
+настоящего Alpine APKINDEX. После генерации `graph.svg` откройте его в браузере
+или проводнике Windows.
