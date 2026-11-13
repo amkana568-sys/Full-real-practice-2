@@ -5,7 +5,15 @@
 #include <stdexcept>
 #include <string>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 int main(int argc, char* argv[]) {
+#ifdef _WIN32
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
+#endif
     try {
         if (argc > 2) {
             throw std::runtime_error("Использование: visualizer [путь_к_config.toml]");

@@ -79,7 +79,7 @@ explorer.exe graph.svg
 
 ```toml
 package = "curl"
-repository = "https://dl-cdn.alpinelinux.org/alpine/v3.19/main/x86_64/APKINDEX.tar.gz"
+repository = "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/APKINDEX.tar.gz"
 test_mode = false
 ascii_tree = true
 max_depth = 3

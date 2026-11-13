@@ -1,9 +1,36 @@
+# Build results and compiled files
 /build/
 /build_*/
 *.o
 *.obj
-*.exe
+*.a
+*.lib
+*.so
 *.dll
+*.exe
 *.pdb
-/graph.puml
-/graph.svg
+
+# Generated graphs in the project root
+/graph*.puml
+/graph*.svg
+
+# Local configuration for a real repository
+/config_real.toml
+
+# Report is submitted separately, not stored in the source repository
+/Отчет_Вариант_23.docx
+
+# Editor and operating system files
+/.vscode/
+/.idea/
+*.user
+*.suo
+.DS_Store
+Thumbs.db
+
+# Archives must not be committed
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz

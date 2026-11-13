@@ -59,7 +59,7 @@ max_depth = 3
 
 ```toml
 package = "zlib"
-repository = "https://dl-cdn.alpinelinux.org/alpine/v3.19/main/x86_64/APKINDEX.tar.gz"
+repository = "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main/x86_64/APKINDEX.tar.gz"
 test_mode = false
 ascii_tree = true
 max_depth = 3
@@ -73,7 +73,8 @@ TOML: плоские пары `ключ = значение`, строки в д�
 
 Нужны C++17-компилятор, CMake и Make/Ninja. В Linux проект собирается обычным
 способом. В Windows можно собрать его без WSL и виртуализации через MSYS2 UCRT64;
-пошаговая инструкция находится в `WINDOWS_SETUP.md`. Для реального репозитория
+пошаговая инструкция находится в `WINDOWS_SETUP.md`. Для публикации в GitHub
+используйте `GIT_SETUP.md`. Для реального репозитория
 дополнительно нужны стандартные консольные программы `curl` и `tar`.
 
 ```bash
@@ -113,7 +114,7 @@ ctest --test-dir build --output-on-failure
 - `P` — цикл `P -> Q -> R -> P`;
 - `U -> A` и `V -> U` — проверка транзитивных обратных зависимостей.
 
-Для трёх примеров выполните:
+Для трёх учебных примеров выполните:
 
 ```bash
 ./build/visualizer examples/config_A.toml
@@ -182,7 +183,7 @@ ctest --test-dir build --output-on-failure
 
 ## 8. История этапов Git
 
-В репозитории предусмотрены пять коммитов в формате Conventional Commits:
+История содержит отдельные Conventional Commits по каждому из пяти этапов.
 
 1. `feat(config): add TOML-based CLI configuration`
 2. `feat(apk): parse Alpine APKINDEX dependencies`
@@ -190,9 +191,14 @@ ctest --test-dir build --output-on-failure
 4. `feat(graph): add reverse dependency traversal`
 5. `feat(output): generate PlantUML, SVG and ASCII tree`
 
-Для публикации в личном Git-сервисе добавьте свой remote и отправьте ветку:
+Порядок публикации репозитория приведён в `GIT_SETUP.md`.
 
-```bash
-git remote add origin <URL-ВАШЕГО-РЕПОЗИТОРИЯ>
-git push -u origin master
-```
+## 9. Проверка простоты и ограничения
+
+Краткое описание назначения каждого исходного файла и границ реализации
+приведено в [`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md).
+
+## 10. Публикация в GitHub
+
+Порядок настройки автора, создания удалённого репозитория и отправки истории
+описан в [`GIT_SETUP.md`](GIT_SETUP.md).
