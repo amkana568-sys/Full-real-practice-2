@@ -4,10 +4,10 @@
 <path d="M 210 73 L 270 73" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
 <path d="M 430 73 L 490 73" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
 <path d="M 570 101 C 570 250 130 250 130 101" stroke="#34495e" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
-<rect x="50" y="45" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<rect x="50" y="45" width="160" height="56" rx="8" fill="none" stroke="#34495e" stroke-width="1.5"/>
 <text x="130" y="79" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">P</text>
-<rect x="270" y="45" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<rect x="270" y="45" width="160" height="56" rx="8" fill="none" stroke="#34495e" stroke-width="1.5"/>
 <text x="350" y="79" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">Q</text>
-<rect x="490" y="45" width="160" height="56" rx="8" fill="#eaf2f8" stroke="#34495e" stroke-width="1.5"/>
+<rect x="490" y="45" width="160" height="56" rx="8" fill="none" stroke="#34495e" stroke-width="1.5"/>
 <text x="570" y="79" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#17202a">R</text>
 </svg>
