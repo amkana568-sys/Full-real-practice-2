@@ -184,7 +184,7 @@ ctest --test-dir build --output-on-failure
 
 ## 8. История этапов Git
 
-История содержит отдельные Conventional Commits по каждому из пяти этапов.
+История содержит отдельные Conventional Commits по каждому из 5 этапов и также он содержит дополнительные коммиты.
 
 1. `feat(config): add TOML-based CLI configuration`
 2. `feat(apk): parse Alpine APKINDEX dependencies`
